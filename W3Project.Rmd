@@ -1,0 +1,53 @@
+---
+title: "Data Visualization using Plotly"
+author: "Santiago Puentes Navas"
+date: "7/3/2020"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Summary
+
+```{r cars, echo = FALSE, warning=FALSE, message = FALSE}
+library(plotly)
+data(mtcars)
+str(mtcars)
+```
+
+For this project, I am showcasing Plotly used to compare different groups within the **mtcars** dataset. For this I will treat cylinders, engine shape (coded in vs variable) and transmission (coded in the am variable) in order to compare the result variable (mpg):
+
+## Handling factor variables
+
+There are some considerations done while pre-processing the dataset:
+
+- Cylinders are simply converted using *as.factor*
+- Engine shape must be converted to factor first using the aforementioned function, then setting the levels as 0 = "V-shaped" and 1 = "straight". This is indicated by the *?mtcars* command.
+- Similarly, transmission needs to be encoded as it follows: 0 = "Automatic" and 1 = "Manual".
+
+## First Boxplot: MPG vs. Number of Cylinders
+
+```{r cylinders, echo = FALSE, message = FALSE, warning=FALSE}
+plot_cyl <- plot_ly(data = mtcars, y = ~mpg, color = ~as.factor(cyl), type = "box", boxpoints = "all", jitter = 0.3)
+plot_cyl
+```
+
+## Second Boxplot: MPG vs. Engine Shape
+
+```{r enginevs, echo = FALSE, message = FALSE, warning=FALSE}
+mtcars$vs = as.factor(mtcars$vs)
+levels(mtcars$vs) = c("V-shaped", "straight")
+plot_vs <- plot_ly(data = mtcars, y = ~mpg, color = ~vs, type = "box", boxpoints = "all", jitter = 0.3)
+plot_vs
+```
+
+## Third Boxplot: MPG vs. Transmission
+
+```{r transmission, echo = FALSE, message = FALSE, warning=FALSE}
+mtcars$am = as.factor(mtcars$am)
+levels(mtcars$am) = c("Automatic", "Manual")
+plot_vs <- plot_ly(data = mtcars, y = ~mpg, color = ~am, type = "box", boxpoints = "all", jitter = 0.3)
+plot_vs
+```
